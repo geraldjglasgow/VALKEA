@@ -57,8 +57,10 @@ namespace VALKEA
         private void AddPieces()
         {
             string assetBundleName = "bjorksnas";
+            var loadedMaterials = new HashSet<Material>(Resources.FindObjectsOfTypeAll<Material>());
             AssetBundle bundle = AssetUtils.LoadAssetBundleFromResources(assetBundleName, Assembly.GetExecutingAssembly());
             var objects = bundle.LoadAllAssets<GameObject>();
+            PieceFixes.RenameBundleMaterials(Resources.FindObjectsOfTypeAll<Material>().Where(m => !loadedMaterials.Contains(m)));
 
             // Add Custom hammer
             GameObject bjorksnas_go = bundle.LoadAsset<GameObject>("BJORKSNAS");

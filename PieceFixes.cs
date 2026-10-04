@@ -26,6 +26,17 @@ namespace VALKEA
                 .Where(w => !w.m_noSupportWear));
         }
 
+        // The bundle carries copies of game materials such as oak_leaf, from the vanilla items and effects it was built
+        // with, under the game's names but with Unity 2019 shaders. Mods that look materials up by name, like Seasonality,
+        // could take the copy for the game's and gave fall oak leaves its shader, which draws them as opaque blocks.
+        public static void RenameBundleMaterials(IEnumerable<Material> materials)
+        {
+            foreach (var material in materials)
+            {
+                material.name = "VALKEA_" + material.name;
+            }
+        }
+
         // The bundle predates WearNTear.m_burnable (default true) and m_ashDamageResist (default false),
         // so stone, metal and glass caught fire. Set them like the game's stone and iron pieces;
         // iron-material pieces made of wood, rope or paper keep burning, like the game's woodiron_beam.
